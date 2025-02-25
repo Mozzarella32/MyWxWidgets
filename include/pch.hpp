@@ -3,7 +3,12 @@
 
 #define GLEW_STATIC
 #include<GL/glew.h>
-#include <GL/GL.h>
+#ifdef _WIN32
+    #include <GL/GL.h>
+#else
+    #include <GL/gl.h>
+#endif
+
 
 #include <wx/wx.h>
 #include <wx/settings.h>
