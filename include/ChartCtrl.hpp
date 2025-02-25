@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.hpp"
 
-#include "Instrumentor.h"
+#include "../submodules/Instrumentor/Instrumentor.hpp"
 
 class ChartControl : public wxWindow
 {

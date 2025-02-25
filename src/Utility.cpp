@@ -9,7 +9,7 @@ void ForAllChildren(wxWindow* w, FunktionForAllChildren f) {
 	f(w);
 
 	const wxWindowList& children = w->GetChildren();
-	for (wxWindowList::Node* node = children.GetFirst(); node; node = node->GetNext())
+	for (auto node = children.GetFirst(); node; node = node->GetNext())
 		ForAllChildren(dynamic_cast<wxWindow*>(node->GetData()), f);
 }
 

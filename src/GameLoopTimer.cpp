@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "GameLoopTimer.hpp"
 
-#include"Instrumentor/Instrumentor.hpp"
+#include "../submodules/Instrumentor/Instrumentor.hpp"
 
 void GameLoopTimer::Work() {
 	PROFILE_FUNKTION;

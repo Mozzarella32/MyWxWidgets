@@ -22,6 +22,8 @@ if (NOT wxWidgets_FOUND)
        wxWidgets
        GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
        GIT_SHALLOW ON
+       CMAKE_ARGS
+           -DwxUSE_STD=0
     )
     FetchContent_MakeAvailable(wxWidgets)
 else()

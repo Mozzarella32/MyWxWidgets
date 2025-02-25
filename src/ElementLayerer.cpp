@@ -1,7 +1,7 @@
 #include "ElementLayerer.hpp"
+#include "../submodules/Instrumentor/Instrumentor.hpp"
 
-#define PROFILING
-#include "Instrumentor/Instrumentor.hpp"
+#include "Utility.hpp"
 
 ElementLayerer::ElementLayerer(wxWindow* RootParent, wxSizer* RootSizer, StyleFunktion SFunk)
 	:RootParent(RootParent), RootSizer(RootSizer), SFunk(SFunk) {

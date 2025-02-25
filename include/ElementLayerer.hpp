@@ -2,7 +2,9 @@
 
 #include "pch.hpp"
 
-#include "Instrumentor/Instrumentor.h"
+#include "../submodules/Instrumentor/Instrumentor.hpp"
+
+#include "MarkupString.hpp"
 
 class ElementLayerer {
 public:
