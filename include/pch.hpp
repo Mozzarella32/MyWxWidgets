@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef GLE_STATIC
+#ifndef GLEW_STATIC
 #define GLEW_STATIC
 #endif
 
