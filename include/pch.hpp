@@ -1,7 +1,9 @@
 #pragma once
 
-
+#ifndef GLE_STATIC
 #define GLEW_STATIC
+#endif
+
 #include<GL/glew.h>
 #ifdef _WIN32
     #include <GL/GL.h>
