@@ -4,15 +4,16 @@
 
 class GLEWInitiliser : public wxGLCanvas {
 	wxGLContext* Context;
+	std::function<void(void)> InitFunktion;
 public:
-	GLEWInitiliser(wxWindow* parent, std::function<void(void)> InitFunktion = []() {}) : wxGLCanvas(parent) {
+	GLEWInitiliser(wxWindow* parent, std::function<void(void)> InitFunktion = []() {}) : wxGLCanvas(parent), InitFunktion(InitFunktion) {
 		static bool Init = false;
 
 		Context = new wxGLContext(this);
 		SetCurrent(*Context);
 
 		wxASSERT_MSG(parent->GetChildren().size() == 1 && !Init, "This class sould be the first wiged to be created in your frame and only be instanciated once");
-	
+
 		Bind(wxEVT_SIZE, &GLEWInitiliser::OnSize, this);
 	}
 
@@ -31,7 +32,7 @@ public:
 			std::cout << "GLEW-Fehler: " << errorString << std::endl;
 			wxASSERT_MSG(false, wxString::Format("GLEW-Fehler: %s", errorString));
 		}
-		UnBind(wxEVT_SIZE, &GLEWInitiliser::OnSize, this);
+		Unbind(wxEVT_SIZE, &GLEWInitiliser::OnSize, this);
 		CallAfter([=]() {
 			InitFunktion();
 			});
@@ -44,7 +45,7 @@ class GLEWFrameIndependentInitiliser :public wxFrame {
 public:
 	//The Init Function Will be called after the GLEW Initilisation
 	GLEWFrameIndependentInitiliser(std::function<void(void)> InitFunktion = []() {}) :wxFrame(NULL, wxID_ANY, "GlewInit") {
-		GLEWInitiliser* glewinit = new GLEWInitiliser(this,InitFunktion);
+		GLEWInitiliser* glewinit = new GLEWInitiliser(this, InitFunktion);
 		Context = glewinit->RetriveContextAndClose();
 	}
 
