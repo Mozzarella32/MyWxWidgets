@@ -6,8 +6,8 @@ Collection of things I have written to use for wxWidgets
 Don't forget the submodules
 ```bash
 git clone git@github.com:Mozzarella32/MyWxWidgets.git
-git submodule update --init --recursive --remote
 cd MyWxWidgets
+git submodule update --init --recursive --remote
 ```
 
 ## Building
