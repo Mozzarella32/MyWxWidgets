@@ -5,7 +5,8 @@ Collection of things I have written to use for wxWidgets
 ## Downloading 
 Don't forget the submodules
 ```bash
-git clone --recurse-submodules git@github.com:Mozzarella32/MyWxWidgets.git
+git clone git@github.com:Mozzarella32/MyWxWidgets.git
+git submodule update --init --recursive --remote
 cd MyWxWidgets
 ```
 
