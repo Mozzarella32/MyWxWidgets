@@ -1,10 +1,10 @@
 #pragma once
 
-#ifndef GLEW_STATIC
-#define GLEW_STATIC
-#endif
+// #ifndef GLEW_STATIC
+// #define GLEW_STATIC
+// #endif
 
-#include<GL/glew.h>
+// #include<GL/glew.h>
 #ifdef _WIN32
     #include <GL/GL.h>
 #else

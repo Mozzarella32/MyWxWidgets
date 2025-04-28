@@ -2,11 +2,12 @@
 
 #include "pch.hpp"
 
-class GLEWInitiliser : public wxGLCanvas {
+class GLInitiliser : public wxGLCanvas {
 	wxGLContext* Context;
-	std::function<void(void)> InitFunktion;
+	std::function<void(void)> InitFunction;
+	std::function<void(void)> GlLoadFunction;
 public:
-	GLEWInitiliser(wxWindow* parent, wxGLContextAttrs& cxtAttrs, std::function<void(void)> InitFunktion = []() {}) : wxGLCanvas(parent), InitFunktion(InitFunktion) {
+	GLInitiliser(wxWindow* parent, wxGLContextAttrs& cxtAttrs, std::function<void(void> GlLoadFunction, std::function<void(void)> InitFunction = []() {}) : wxGLCanvas(parent), InitFunction(InitFunction), GlLoadFunction(GlLoadFunction) {
 		static bool Init = false;
 
 		Context = new wxGLContext(this,nullptr,&cxtAttrs);
@@ -34,31 +35,32 @@ public:
 
 	void OnSize(wxSizeEvent& event) {
 		SetCurrent(*Context);
-		GLenum glewInitResult = glewInit();
-		if (glewInitResult != GLEW_OK) {
-			const GLubyte* errorString = glewGetErrorString(glewInitResult);
-			std::cout << "GLEW-Fehler: " << errorString << std::endl;
-			wxASSERT_MSG(false, wxString::Format("GLEW-Fehler: %s", errorString));
-		}
+		GlLoadFunction();
+		// GLenum glewInitResult = glewInit();
+		// if (glewInitResult != GLEW_OK) {
+			// const GLubyte* errorString = glewGetErrorString(glewInitResult);
+			// std::cout << "GLEW-Fehler: " << errorString << std::endl;
+			// wxASSERT_MSG(false, wxString::Format("GLEW-Fehler: %s", errorString));
+		// }
 		Unbind(wxEVT_SIZE, &GLEWInitiliser::OnSize, this);
 		CallAfter([=]() {
-			InitFunktion();
+			InitFunction();
 			});
 	}
 };
 
 
-class GLEWFrameIndependentInitiliser :public wxFrame {
-	GLEWInitiliser* glewinit;
+class GLFrameIndependentInitiliser :public wxFrame {
+	GLInitiliser* glinit;
 public:
 	//The Init Function Will be called after the GLEW Initilisation
 	GLEWFrameIndependentInitiliser(wxGLContextAttrs& cxtAttrs, std::function<void(void)> InitFunktion = []() {}) :wxFrame(NULL, wxID_ANY, "GlewInit") {
-		glewinit = new GLEWInitiliser(this, cxtAttrs, InitFunktion);
+		glinit = new GLInitiliser(this, cxtAttrs, InitFunktion);
 		Show();
 	}
 
 	wxGLContext* RetriveContextAndClose() {
-		wxGLContext* Context = glewinit->RetriveContextAndClose();
+		wxGLContext* Context = glinit->RetriveContextAndClose();
 		SetSize(wxSize(0, 0));
 		Hide();
 		Disable();
