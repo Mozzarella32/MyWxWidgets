@@ -42,7 +42,7 @@ public:
 			// std::cout << "GLEW-Fehler: " << errorString << std::endl;
 			// wxASSERT_MSG(false, wxString::Format("GLEW-Fehler: %s", errorString));
 		// }
-		Unbind(wxEVT_SIZE, &GLEWInitiliser::OnSize, this);
+		Unbind(wxEVT_SIZE, &GLInitiliser::OnSize, this);
 		CallAfter([=]() {
 			InitFunction();
 			});
@@ -54,7 +54,7 @@ class GLFrameIndependentInitiliser :public wxFrame {
 	GLInitiliser* glinit;
 public:
 	//The Init Function Will be called after the GLEW Initilisation
-	GLEWFrameIndependentInitiliser(wxGLContextAttrs& cxtAttrs, std::function<void(void)> InitFunktion = []() {}) :wxFrame(NULL, wxID_ANY, "GlewInit") {
+	GLFrameIndependentInitiliser(wxGLContextAttrs& cxtAttrs, std::function<void(void)> InitFunktion = []() {}) :wxFrame(NULL, wxID_ANY, "GLInit") {
 		glinit = new GLInitiliser(this, cxtAttrs, InitFunktion);
 		Show();
 	}
