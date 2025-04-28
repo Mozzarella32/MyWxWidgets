@@ -5,12 +5,13 @@
 // #endif
 
 // #include<GL/glew.h>
-#ifdef _WIN32
-    #include <GL/GL.h>
-#else
-    #include <GL/gl.h>
-#endif
+// #ifdef _WIN32
+    // #include <GL/GL.h>
+// #else
+    // #include <GL/gl.h>
+// #endif
 
+#include <Shader.hpp>
 
 #include <wx/wx.h>
 #include <wx/settings.h>
