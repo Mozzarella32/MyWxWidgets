@@ -7,7 +7,7 @@ class GLInitiliser : public wxGLCanvas {
 	std::function<void(void)> InitFunction;
 	std::function<void(void)> GlLoadFunction;
 public:
-	GLInitiliser(wxWindow* parent, wxGLContextAttrs& cxtAttrs, std::function<void(void> GlLoadFunction, std::function<void(void)> InitFunction = []() {}) : wxGLCanvas(parent), InitFunction(InitFunction), GlLoadFunction(GlLoadFunction) {
+	GLInitiliser(wxWindow* parent, wxGLContextAttrs& cxtAttrs, std::function<void(void)> GlLoadFunction, std::function<void(void)> InitFunction = []() {}) : wxGLCanvas(parent), InitFunction(InitFunction), GlLoadFunction(GlLoadFunction) {
 		static bool Init = false;
 
 		Context = new wxGLContext(this,nullptr,&cxtAttrs);
