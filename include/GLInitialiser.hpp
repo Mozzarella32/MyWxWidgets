@@ -7,7 +7,7 @@ class GLInitiliser : public wxGLCanvas {
 	std::function<void(void)> InitFunction;
 	std::function<void(void)> GlLoadFunction;
 public:
-	GLInitiliser(wxWindow* parent, wxGLContextAttrs& cxtAttrs, std::function<void(void)> GlLoadFunction, std::function<void(void)> InitFunction = []() {}) : wxGLCanvas(parent), InitFunction(InitFunction), GlLoadFunction(GlLoadFunction) {
+	GLInitiliser(wxWindow* parent, wxGLContextAttrs& cxtAttrs, std::function<void(void)> GlLoadFunction, std::function<void(void)> InitFunction) : wxGLCanvas(parent), InitFunction(InitFunction), GlLoadFunction(GlLoadFunction) {
 		static bool Init = false;
 
 		Context = new wxGLContext(this,nullptr,&cxtAttrs);
@@ -43,7 +43,7 @@ public:
 			// wxASSERT_MSG(false, wxString::Format("GLEW-Fehler: %s", errorString));
 		// }
 		Unbind(wxEVT_SIZE, &GLInitiliser::OnSize, this);
-		CallAfter([=]() {
+		CallAfter([this]() {
 			InitFunction();
 			});
 	}
@@ -53,9 +53,9 @@ public:
 class GLFrameIndependentInitiliser :public wxFrame {
 	GLInitiliser* glinit;
 public:
-	//The Init Function Will be called after the GLEW Initilisation
-	GLFrameIndependentInitiliser(wxGLContextAttrs& cxtAttrs, std::function<void(void)> InitFunktion = []() {}) :wxFrame(NULL, wxID_ANY, "GLInit") {
-		glinit = new GLInitiliser(this, cxtAttrs, InitFunktion);
+	//The Init Function Will be called after the GlLoadFunction was called
+	GLFrameIndependentInitiliser(wxGLContextAttrs& cxtAttrs, std::function<void(void)> GlLoadFunction, std::function<void(void)> InitFunktion):wxFrame(NULL, wxID_ANY, "GLInit") {
+		glinit = new GLInitiliser(this, cxtAttrs, GlLoadFunction, InitFunktion);
 		Show();
 	}
 

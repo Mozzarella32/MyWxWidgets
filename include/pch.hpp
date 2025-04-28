@@ -1,17 +1,6 @@
 #pragma once
 
-// #ifndef GLEW_STATIC
-// #define GLEW_STATIC
-// #endif
-
-// #include<GL/glew.h>
-// #ifdef _WIN32
-    // #include <GL/GL.h>
-// #else
-    // #include <GL/gl.h>
-// #endif
-
-#include <Shader.hpp>
+#include <glad/gl.h>
 
 #include <wx/wx.h>
 #include <wx/settings.h>
