@@ -34,14 +34,12 @@ public:
 	}
 
 	void OnSize(wxSizeEvent& event) {
+		static bool init = false;
+		if(init) return;
+		init = true;
+
 		SetCurrent(*Context);
 		GlLoadFunction();
-		// GLenum glewInitResult = glewInit();
-		// if (glewInitResult != GLEW_OK) {
-			// const GLubyte* errorString = glewGetErrorString(glewInitResult);
-			// std::cout << "GLEW-Fehler: " << errorString << std::endl;
-			// wxASSERT_MSG(false, wxString::Format("GLEW-Fehler: %s", errorString));
-		// }
 		Unbind(wxEVT_SIZE, &GLInitiliser::OnSize, this);
 		CallAfter([this]() {
 			InitFunction();
