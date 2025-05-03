@@ -107,9 +107,9 @@ target_link_libraries(${PROJECT_NAME} PUBLIC wx::net wx::core wx::base)
 
 # GLEW Linking
  if (NOT GLEW_FOUND)
-   # target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
+   target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
  else()
-   # target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
+   target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
  endif()
 
 # MyOpenGl Linking
