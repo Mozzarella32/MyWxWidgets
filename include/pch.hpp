@@ -1,6 +1,8 @@
 #pragma once
 
-#include <glad/gl.h>
+// #define c
+// #include <glad/gl.h>
+// #include <GL/glew.h>
 
 #include <wx/wx.h>
 #include <wx/settings.h>
