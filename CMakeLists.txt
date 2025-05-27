@@ -45,6 +45,10 @@ if (NOT GLEW_FOUND)
        GIT_REPOSITORY https://github.com/Perlmint/glew-cmake
        GIT_SHALLOW ON
     )
+
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGLEW_EGL")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGLEW_EGL")
+        
     FetchContent_MakeAvailable(glew)
 
     #add_subdirectory(${glew_SOURCE_DIR} ${glew_BINARY_DIR} EXCLUDE_FROM_ALL)
