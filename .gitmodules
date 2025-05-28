@@ -1,3 +1,9 @@
 [submodule "submodules/Instrumentor"]
 	path = submodules/Instrumentor
 	url = https://github.com/Mozzarella32/Instrumentor
+[submodule "submodules/stb"]
+	path = submodules/stb
+	url = https://github.com/nothings/stb.git
+[submodule "submodules/MyOpenGl"]
+	path = submodules/MyOpenGl
+	url = https://github.com/Mozzarella32/MyOpenGl.git
