@@ -12,20 +12,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # if (NOT wxWidgets_FOUND)
     # message(STATUS "wxWidgets not found")
-    set(wxBUILD_SHARED OFF)
-    set(wxBUILD_TESTS OFF)
-    set(wxBUILD_DEMOS OFF)
-    set(wxBUILD_EXAMPLES OFF)
+# set(wxBUILD_SHARED OFF)
+# set(wxBUILD_TESTS OFF)
+# set(wxBUILD_DEMOS OFF)
+# set(wxBUILD_EXAMPLES OFF)
 
-    message(STATUS "Fetching wxWidgets...")
-    FetchContent_Declare(
-       wxWidgets
-       GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
-       GIT_SHALLOW ON
-       CMAKE_ARGS
-           -DwxUSE_STD=0
-    )
-    FetchContent_MakeAvailable(wxWidgets)
+# message(STATUS "Fetching wxWidgets...")
+# FetchContent_Declare(
+#    wxWidgets
+#    GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
+#    GIT_SHALLOW ON
+#    CMAKE_ARGS
+#        -DwxUSE_STD=0
+# )
+# FetchContent_MakeAvailable(wxWidgets)
 # else()
     # message(STATUS "wxWidgets Found")
 # endif()
@@ -35,21 +35,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # if (NOT GLEW_FOUND)
     # message(STATUS "GLEW not found")
-    message(STATUS "Fetching GLEW...")
+    # message(STATUS "Fetching GLEW...")
 
-    set(glew-cmake_BUILD_SHARED OFF)
-    set(USE_GLU ON)
-    # https://github.com/Perlmint/glew-cmake/blob/master/glew-cmake/fetch-content.cmake
-    FetchContent_Declare(
-       GLEW
-       GIT_REPOSITORY https://github.com/Perlmint/glew-cmake
-       GIT_SHALLOW ON
-    )
+    # set(glew-cmake_BUILD_SHARED OFF)
+    # set(USE_GLU ON)
+    # # https://github.com/Perlmint/glew-cmake/blob/master/glew-cmake/fetch-content.cmake
+    # FetchContent_Declare(
+    #    GLEW
+    #    GIT_REPOSITORY https://github.com/Perlmint/glew-cmake
+    #    GIT_SHALLOW ON
+    # )
 
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGLEW_EGL")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGLEW_EGL")
+    # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGLEW_EGL")
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGLEW_EGL")
         
-    FetchContent_MakeAvailable(glew)
+    # FetchContent_MakeAvailable(glew)
 
     #add_subdirectory(${glew_SOURCE_DIR} ${glew_BINARY_DIR} EXCLUDE_FROM_ALL)
 # else()
@@ -57,28 +57,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # endif()
 
 # STB - Header-only-Bibliothek
-message(STATUS "Fetching stb...")
+# message(STATUS "Fetching stb...")
 
-FetchContent_Declare(
-    stb
-    GIT_REPOSITORY https://github.com/nothings/stb.git
-    GIT_SHALLOW ON
-)
+# FetchContent_Declare(
+#     stb
+#     GIT_REPOSITORY https://github.com/nothings/stb.git
+#     GIT_SHALLOW ON
+# )
 
-FetchContent_MakeAvailable(stb)
+# FetchContent_MakeAvailable(stb)
 
-set(STB_INCLUDE_DIR ${stb_SOURCE_DIR})
+# set(STB_INCLUDE_DIR ${stb_SOURCE_DIR})
 
 # MyOpenGl
-message(STATUS "Fetching MyOpenGl...")
+# message(STATUS "Fetching MyOpenGl...")
 
-FetchContent_Declare(
-       MyOpenGl
-       GIT_REPOSITORY https://github.com/Mozzarella32/MyOpenGl.git
-       GIT_SHALLOW ON
-       GIT_TAG main
-)
-FetchContent_MakeAvailable(MyOpenGl)
+# FetchContent_Declare(
+#        MyOpenGl
+#        GIT_REPOSITORY https://github.com/Mozzarella32/MyOpenGl.git
+#        GIT_SHALLOW ON
+#        GIT_TAG main
+# )
+# FetchContent_MakeAvailable(MyOpenGl)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/submodules/MyOpenGl)
 
 # Directories
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
@@ -104,17 +106,17 @@ add_library(${PROJECT_NAME} STATIC ${MY_SOURCE})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCH_HEADERS})
 
 # Include-Direktiven
-target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR} ${STB_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR})
 
 # wxWidgets Linking
 target_link_libraries(${PROJECT_NAME} PUBLIC wx::net wx::core wx::base)
 
 # GLEW Linking
- if (NOT GLEW_FOUND)
-   target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
- else()
-   target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
- endif()
+ # if (NOT GLEW_FOUND)
+target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
+ # else()
+   # target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
+ # endif()
 
 # MyOpenGl Linking
 target_link_libraries(${PROJECT_NAME} PUBLIC MyOpenGl)
