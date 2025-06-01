@@ -109,11 +109,11 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCH_HEADERS})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR})
 
 # wxWidgets Linking
-target_link_libraries(${PROJECT_NAME} PUBLIC wx::net wx::core wx::base)
+# target_link_libraries(${PROJECT_NAME} PUBLIC wx::net wx::core wx::base)
 
 # GLEW Linking
  # if (NOT GLEW_FOUND)
-target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
+# target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
  # else()
    # target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
  # endif()
