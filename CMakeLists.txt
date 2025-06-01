@@ -112,11 +112,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR})
 # target_link_libraries(${PROJECT_NAME} PUBLIC wx::net wx::core wx::base)
 
 # GLEW Linking
- # if (NOT GLEW_FOUND)
-# target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
- # else()
-   # target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
- # endif()
+# if (NOT GLEW_FOUND)
+target_link_libraries(${PROJECT_NAME} PRIVATE libglew_static)
+# else()
+    # target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::glew_s)
+# endif()
 
 # MyOpenGl Linking
 target_link_libraries(${PROJECT_NAME} PUBLIC MyOpenGl)
