@@ -31,6 +31,11 @@
 *.out
 *.app
 
-.cache
+# CMake
+build/
 
-build/*
+# clangd
+.cache/
+
+# Submodules
+submodules/
