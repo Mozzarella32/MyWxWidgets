@@ -36,6 +36,3 @@ build/
 
 # clangd
 .cache/
-
-# Submodules
-submodules/
