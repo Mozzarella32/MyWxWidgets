@@ -10,6 +10,24 @@
 
 #include <glad/glad.h>
 
+#ifdef _WIN32
+
+#ifndef _SILENCE_CXX23_DENORM_DEPRECATION_WARNING
+#define _SILENCE_CXX23_DENORM_DEPRECATION_WARNING
+#endif
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <Windows.h>
+#include <GL/gl.h>
+#endif
+#include <GL/glu.h>
+
 // #include <GL/glew.h>
 // #ifdef _WIN32
     // #include <GL/GL.h>
