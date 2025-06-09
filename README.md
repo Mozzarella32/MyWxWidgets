@@ -2,18 +2,11 @@
 ## Description
 Collection of things I have written to use for wxWidgets
 
-## Downloading 
-Don't forget the submodules
+## Downloading and Building
 ```bash
-git clone git@github.com:Mozzarella32/MyWxWidgets.git
-cd MyWxWidgets
-git submodule update --init --recursive --remote
-```
-
-## Building
-Go to the root of this Project and run these commands the -j8 flag is for faster compilation and can be omitted
-```bash
+git clone --recurse-submodules --shallow-submodules https://github.com/Mozzarella32/MyWxWidgets.git
+cd MyOpenGl
 mkdir build
 cd build
-cmake ../ && cmake --build . -j8
+cmake ../ && cmake --build . -j$(nproc)
 ```
