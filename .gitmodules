@@ -1,6 +1,8 @@
 [submodule "submodules/Instrumentor"]
 	path = submodules/Instrumentor
 	url = https://github.com/Mozzarella32/Instrumentor
+	branch = main
 [submodule "submodules/MyOpenGl"]
 	path = submodules/MyOpenGl
 	url = https://github.com/Mozzarella32/MyOpenGl.git
+	branch = main
