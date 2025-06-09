@@ -48,4 +48,6 @@
 #include <filesystem>
 #include <concepts>
 #include <condition_variable>
+#include <optional>
+
 #include <Utilities.hpp>
