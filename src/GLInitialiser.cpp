@@ -1,5 +1,12 @@
 #include "GLInitialiser.hpp"
 
+AppWithGlContext::AppWithGlContext(){
+    if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
+    wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
+    exit(1);
+  }
+}
+
 wxGLAttributes AppWithGlContext::GetGLAttrs() const {
   wxGLAttributes glAttrs;
   glAttrs.PlatformDefaults().Defaults().EndList();
@@ -19,20 +26,17 @@ const wxGLContextAttrs &AppWithGlContext::GetRealGLContextAttrs() const {
 bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
   if (isInitilized)
     return true;
+
+  if (!Canvas->IsShownOnScreen())
+    return false;
+
   if (!Context) {
     wxMessageBox("Initilized called with canvas but no Context jet", "Error",
                  wxICON_ERROR);
     return false;
   }
-  if (!Canvas->IsShownOnScreen())
-    return false;
 
   Canvas->SetCurrent(Canvas);
-
-  if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
-    wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
-    exit(1);
-  }
 
   if (!gladLoadGL()) {
     wxMessageBox("Failed to initialize GLAD!", "Error", wxICON_ERROR);
@@ -68,8 +72,11 @@ void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
       wxMessageBox("Failed to create opengl context", "Error", wxICON_ERROR);
       exit(1);
     }
+
+    Canvas->SetCurrent(Context);
   }
   Canvases.insert(Canvas);
+  Canvas->Show();
 }
 
 void AppWithGlContext::UnRegisterGLCanvas(wxGLCanvas *Canvas) {

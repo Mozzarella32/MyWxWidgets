@@ -10,6 +10,8 @@ class AppWithGlContext : public wxApp {
   wxGLContextAttrs RealContextAttrs;
 
 public:
+  void AppWithGLContext();
+  
   virtual wxGLAttributes GetGLAttrs() const;
 
   virtual wxGLContextAttrs GetGLContextAttrs() const;
