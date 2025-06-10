@@ -40,7 +40,7 @@ bool FrameWithGlContext::Initilized(wxGLCanvas *Canvas) {
     return false;
   }
 
-  Canvas->SetCurrent(Context.value());
+  Canvas->SetCurrent(*Context.value());
 
   if (!gladLoadGL()) {
     wxMessageBox("Failed to initialize GLAD!", "Error", wxICON_ERROR);
@@ -59,25 +59,25 @@ bool FrameWithGlContext::BindGLContext() {
   if (Canvases.empty()) {
     return false;
   }
-  (*Canvases.begin())->SetCurrent(Context.value());
+  (*Canvases.begin())->SetCurrent(*Context.value());
   return true;
 }
 
-const std::optional<wxGLContext> &FrameWithGlContext::GetContext() const {
+const std::optional<wxGLContext*> &FrameWithGlContext::GetContext() const {
   return Context;
 }
 
 void FrameWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
   if (!Context) {
     RealContextAttrs = GetGLContextAttrs();
-    Context = wxGLContext(Canvas, nullptr, &RealContextAttrs);
+    Context = new wxGLContext(Canvas, nullptr, &RealContextAttrs);
 
-    if (!Context->IsOK()) {
+    if (!(*Context)->IsOK()) {
       wxMessageBox("Failed to create opengl context", "Error", wxICON_ERROR);
       exit(1);
     }
 
-    Canvas->SetCurrent(Context.value());
+    Canvas->SetCurrent(*Context.value());
   }
   Canvases.insert(Canvas);
   Canvas->CallAfter([Canvas]() { Canvas->SetSize(wxSize(1, 1)); });
@@ -117,7 +117,7 @@ bool wxGLCanvasWithFrameContext::BindContext() {
   }
   if (!Frame->GetContext())
     return false;
-  SetCurrent(Frame->GetContext().value());
+  SetCurrent(*Frame->GetContext().value());
   return true;
 }
 

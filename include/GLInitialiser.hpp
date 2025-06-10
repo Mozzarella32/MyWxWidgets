@@ -4,20 +4,18 @@
 #include "wx/glcanvas.h"
 
 class FrameWithGlContext : public wxFrame {
-  std::optional<wxGLContext> Context;
+  std::optional<wxGLContext *> Context;
   std::unordered_set<wxGLCanvas *> Canvases;
   bool isInitilized = false;
   wxGLContextAttrs RealContextAttrs;
 
 public:
-  FrameWithGlContext(wxWindow *parent,
-               wxWindowID id,
-               const wxString& title,
-               const wxPoint& pos = wxDefaultPosition,
-               const wxSize& size = wxDefaultSize,
-               long style = wxDEFAULT_FRAME_STYLE,
-               const wxString& name = wxASCII_STR(wxFrameNameStr));
-    
+  FrameWithGlContext(wxWindow *parent, wxWindowID id, const wxString &title,
+                     const wxPoint &pos = wxDefaultPosition,
+                     const wxSize &size = wxDefaultSize,
+                     long style = wxDEFAULT_FRAME_STYLE,
+                     const wxString &name = wxASCII_STR(wxFrameNameStr));
+
   virtual wxGLAttributes GetGLAttrs() const;
 
   virtual wxGLContextAttrs GetGLContextAttrs() const;
@@ -30,7 +28,7 @@ public:
 
   bool BindGLContext();
 
-  const std::optional<wxGLContext> &GetContext() const;
+  const std::optional<wxGLContext *> &GetContext() const;
 
   void RegisterGLCanvas(wxGLCanvas *Canvas);
   void UnRegisterGLCanvas(wxGLCanvas *Canvas);
