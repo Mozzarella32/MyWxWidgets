@@ -3,9 +3,11 @@
 #include "pch.hpp"
 #include "wx/glcanvas.h"
 
+class wxGLCanvasWithFrameContext;
+
 class FrameWithGlContext : public wxFrame {
   std::optional<wxGLContext *> Context;
-  std::unordered_set<wxGLCanvas *> Canvases;
+  std::unordered_set<wxGLCanvasWithFrameContext *> Canvases;
   bool isInitilized = false;
   wxGLContextAttrs RealContextAttrs;
 
@@ -15,6 +17,8 @@ public:
                      const wxSize &size = wxDefaultSize,
                      long style = wxDEFAULT_FRAME_STYLE,
                      const wxString &name = wxASCII_STR(wxFrameNameStr));
+
+  ~FrameWithGlContext();
 
   virtual wxGLAttributes GetGLAttrs() const;
 
@@ -30,13 +34,14 @@ public:
 
   const std::optional<wxGLContext *> &GetContext() const;
 
-  void RegisterGLCanvas(wxGLCanvas *Canvas);
-  void UnRegisterGLCanvas(wxGLCanvas *Canvas);
+  void RegisterGLCanvas(wxGLCanvasWithFrameContext *Canvas);
+  void UnRegisterGLCanvas(wxGLCanvasWithFrameContext *Canvas);
 };
 
 class wxGLCanvasWithFrameContext : public wxGLCanvas {
 public:
   FrameWithGlContext *Frame;
+  bool DontUnregister = false;
   std::optional<std::function<void(wxSizeEvent &)>> OnSize;
 
 public:
@@ -52,6 +57,8 @@ public:
   bool BindContext();
 
   void SetOnSize(std::function<void(wxSizeEvent &)> Func);
+
+  void TurnOffUnregister();
 };
 
 // class GLInitiliser : public wxGLCanvas {

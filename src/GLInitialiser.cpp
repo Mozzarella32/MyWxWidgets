@@ -11,6 +11,12 @@ FrameWithGlContext::FrameWithGlContext(wxWindow *parent, wxWindowID id,
   }
 }
 
+FrameWithGlContext::~FrameWithGlContext() {
+  for (const auto &Canvas : Canvases) {
+    Canvas->TurnOffUnregister();
+  }
+}
+
 wxGLAttributes FrameWithGlContext::GetGLAttrs() const {
   wxGLAttributes glAttrs;
   glAttrs.PlatformDefaults().Defaults().EndList();
@@ -63,11 +69,11 @@ bool FrameWithGlContext::BindGLContext() {
   return true;
 }
 
-const std::optional<wxGLContext*> &FrameWithGlContext::GetContext() const {
+const std::optional<wxGLContext *> &FrameWithGlContext::GetContext() const {
   return Context;
 }
 
-void FrameWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
+void FrameWithGlContext::RegisterGLCanvas(wxGLCanvasWithFrameContext *Canvas) {
   if (!Context) {
     RealContextAttrs = GetGLContextAttrs();
     Context = new wxGLContext(Canvas, nullptr, &RealContextAttrs);
@@ -84,7 +90,8 @@ void FrameWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
   Canvas->Show();
 }
 
-void FrameWithGlContext::UnRegisterGLCanvas(wxGLCanvas *Canvas) {
+void FrameWithGlContext::UnRegisterGLCanvas(
+    wxGLCanvasWithFrameContext *Canvas) {
   Canvases.erase(Canvas);
 }
 
@@ -108,6 +115,8 @@ wxGLCanvasWithFrameContext::wxGLCanvasWithFrameContext(
   });
 }
 wxGLCanvasWithFrameContext::~wxGLCanvasWithFrameContext() {
+  if (DontUnregister)
+    return;
   Frame->UnRegisterGLCanvas(this);
 }
 
@@ -125,3 +134,5 @@ void wxGLCanvasWithFrameContext::SetOnSize(
     std::function<void(wxSizeEvent &)> Func) {
   OnSize = Func;
 }
+
+void wxGLCanvasWithFrameContext::TurnOffUnregister() { DontUnregister = true; }
