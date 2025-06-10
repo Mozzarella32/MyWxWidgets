@@ -63,6 +63,11 @@ void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
   if (!Context) {
     RealContextAttrs = GetGLContextAttrs();
     Context = wxGLContext(Canvas, nullptr, &RealContextAttrs);
+
+    if (!Context->IsOK()) {
+      wxMessageBox("Failed to create opengl context", "Error", wxICON_ERROR);
+      exit(1);
+    }
   }
   Canvases.insert(Canvas);
 }
