@@ -36,6 +36,9 @@ bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
     wxMessageBox("Failed to initialize GLAD!", "Error", wxICON_ERROR);
     exit(1);
   }
+
+  OnGLInit();
+  
   return true;
 }
 

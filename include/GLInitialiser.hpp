@@ -15,6 +15,8 @@ public:
 
   virtual wxGLContextAttrs GetGLContextAttrs() const;
 
+  virtual void OnGLInit() {};
+
   const wxGLContextAttrs &GetRealGLContextAttrs() const;
 
   bool Initilized(wxGLCanvas *Canvas);
@@ -25,6 +27,7 @@ public:
 
   void RegisterGLCanvas(wxGLCanvas *Canvas);
   void UnRegisterGLCanvas(wxGLCanvas *Canvas);
+
 };
 
 class wxGLCanvasWithAppContext : public wxGLCanvas {
