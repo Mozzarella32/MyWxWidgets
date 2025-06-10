@@ -1,30 +1,29 @@
 #include "GLInitialiser.hpp"
 
-bool AppWithGlContext::OnInit() {
+FrameWithGlContext::FrameWithGlContext() {
   if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
     wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
     exit(1);
   }
-  return OnMyInit();
 }
 
-wxGLAttributes AppWithGlContext::GetGLAttrs() const {
+wxGLAttributes FrameWithGlContext::GetGLAttrs() const {
   wxGLAttributes glAttrs;
   glAttrs.PlatformDefaults().Defaults().EndList();
   return glAttrs;
 }
 
-wxGLContextAttrs AppWithGlContext::GetGLContextAttrs() const {
+wxGLContextAttrs FrameWithGlContext::GetGLContextAttrs() const {
   wxGLContextAttrs glCtxAttrs;
   glCtxAttrs.CoreProfile().OGLVersion(4, 5).EndList();
   return glCtxAttrs;
 }
 
-const wxGLContextAttrs &AppWithGlContext::GetRealGLContextAttrs() const {
+const wxGLContextAttrs &FrameWithGlContext::GetRealGLContextAttrs() const {
   return RealContextAttrs;
 }
 
-bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
+bool FrameWithGlContext::Initilized(wxGLCanvas *Canvas) {
   if (isInitilized)
     return true;
 
@@ -49,7 +48,7 @@ bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
   return true;
 }
 
-bool AppWithGlContext::BindGLContext() {
+bool FrameWithGlContext::BindGLContext() {
   if (!Context) {
     return false;
   }
@@ -60,11 +59,11 @@ bool AppWithGlContext::BindGLContext() {
   return true;
 }
 
-const std::optional<wxGLContext> &AppWithGlContext::GetContext() const {
+const std::optional<wxGLContext> &FrameWithGlContext::GetContext() const {
   return Context;
 }
 
-void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
+void FrameWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
   if (!Context) {
     RealContextAttrs = GetGLContextAttrs();
     Context = wxGLContext(Canvas, nullptr, &RealContextAttrs);
@@ -81,22 +80,22 @@ void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
   Canvas->Show();
 }
 
-void AppWithGlContext::UnRegisterGLCanvas(wxGLCanvas *Canvas) {
+void FrameWithGlContext::UnRegisterGLCanvas(wxGLCanvas *Canvas) {
   Canvases.erase(Canvas);
 }
 
-wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
-    AppWithGlContext *App, wxWindow *parent, wxWindowID id, const wxPoint &pos,
-    const wxSize &size, long style, const wxString &name,
+wxGLCanvasWithFrameContext::wxGLCanvasWithFrameContext(
+    FrameWithGlContext *Frame, wxWindow *parent, wxWindowID id,
+    const wxPoint &pos, const wxSize &size, long style, const wxString &name,
     const wxPalette &palette)
-    : wxGLCanvas(parent, App->GetGLAttrs(), id, pos, size, style, name,
+    : wxGLCanvas(parent, Frame->GetGLAttrs(), id, pos, size, style, name,
                  palette),
-      App(App) {
+      Frame(Frame) {
 
-  App->RegisterGLCanvas(this);
+  Frame->RegisterGLCanvas(this);
 
   Bind(wxEVT_SIZE, [this](wxSizeEvent &evt) {
-    if (!this->App->Initilized(this)) {
+    if (!this->Frame->Initilized(this)) {
       return;
     }
     if (OnSize) {
@@ -104,21 +103,21 @@ wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
     }
   });
 }
-wxGLCanvasWithAppContext::~wxGLCanvasWithAppContext() {
-  App->UnRegisterGLCanvas(this);
+wxGLCanvasWithFrameContext::~wxGLCanvasWithFrameContext() {
+  Frame->UnRegisterGLCanvas(this);
 }
 
-bool wxGLCanvasWithAppContext::BindContext() {
-  if (!App->Initilized(this)) {
+bool wxGLCanvasWithFrameContext::BindContext() {
+  if (!Frame->Initilized(this)) {
     return false;
   }
-  if (!App->GetContext())
+  if (!Frame->GetContext())
     return false;
-  SetCurrent(App->GetContext().value());
+  SetCurrent(Frame->GetContext().value());
   return true;
 }
 
-void wxGLCanvasWithAppContext::SetOnSize(
+void wxGLCanvasWithFrameContext::SetOnSize(
     std::function<void(wxSizeEvent &)> Func) {
   OnSize = Func;
 }

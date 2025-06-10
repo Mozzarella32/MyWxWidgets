@@ -3,16 +3,14 @@
 #include "pch.hpp"
 #include "wx/glcanvas.h"
 
-class AppWithGlContext : public wxApp {
+class FrameWithGlContext : public wxFrame {
   std::optional<wxGLContext> Context;
   std::unordered_set<wxGLCanvas *> Canvases;
   bool isInitilized = false;
   wxGLContextAttrs RealContextAttrs;
 
 public:
-  bool OnInit() override final;
-
-  virtual bool OnMyInit() { return true; };
+  FrameWithGlContext();
 
   virtual wxGLAttributes GetGLAttrs() const;
 
@@ -32,20 +30,20 @@ public:
   void UnRegisterGLCanvas(wxGLCanvas *Canvas);
 };
 
-class wxGLCanvasWithAppContext : public wxGLCanvas {
+class wxGLCanvasWithFrameContext : public wxGLCanvas {
 public:
-  AppWithGlContext *App;
+  FrameWithGlContext *Frame;
   std::optional<std::function<void(wxSizeEvent &)>> OnSize;
 
 public:
-  wxGLCanvasWithAppContext(AppWithGlContext *App, wxWindow *parent,
-                           wxWindowID id = wxID_ANY,
-                           const wxPoint &pos = wxDefaultPosition,
-                           const wxSize &size = wxDefaultSize, long style = 0,
-                           const wxString &name = wxGLCanvasName,
-                           const wxPalette &palette = wxNullPalette);
+  wxGLCanvasWithFrameContext(FrameWithGlContext *Frame, wxWindow *parent,
+                             wxWindowID id = wxID_ANY,
+                             const wxPoint &pos = wxDefaultPosition,
+                             const wxSize &size = wxDefaultSize, long style = 0,
+                             const wxString &name = wxGLCanvasName,
+                             const wxPalette &palette = wxNullPalette);
 
-  virtual ~wxGLCanvasWithAppContext();
+  virtual ~wxGLCanvasWithFrameContext();
 
   bool BindContext();
 
