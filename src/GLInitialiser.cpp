@@ -55,6 +55,11 @@ bool AppWithGlContext::BindGLContext() {
   return true;
 }
 
+
+const std::optional<wxGLContext> &AppWithGlContext::GetContext() const{
+  return Context;
+}
+
 void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
   if (!Context) {
     RealContextAttrs = GetGLContextAttrs();
