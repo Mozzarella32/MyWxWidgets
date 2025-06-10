@@ -49,5 +49,6 @@
 #include <concepts>
 #include <condition_variable>
 #include <optional>
+#include <unordered_set>
 
 #include <Utilities.hpp>

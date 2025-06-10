@@ -2,7 +2,6 @@
 
 #include "pch.hpp"
 #include "wx/glcanvas.h"
-#include <unordered_set>
 
 class AppWithGlContext : public wxApp {
   std::optional<wxGLContext> Context;
