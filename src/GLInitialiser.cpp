@@ -86,7 +86,9 @@ wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
   App->RegisterGLCanvas(this);
 
   Bind(wxEVT_SIZE, [this](wxSizeEvent &evt) {
-    this->App->Initilized(this);
+    if(!this->App->Initilized(this)){
+      return;
+    }
     if (OnSize) {
       OnSize.value()(evt);
     }
