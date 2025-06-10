@@ -86,7 +86,6 @@ void FrameWithGlContext::RegisterGLCanvas(wxGLCanvasWithFrameContext *Canvas) {
     Canvas->SetCurrent(*Context.value());
   }
   Canvases.insert(Canvas);
-  Canvas->CallAfter([Canvas]() { Canvas->SetSize(wxSize(1, 1)); });
   Canvas->Show();
 }
 
