@@ -1,10 +1,11 @@
 #include "GLInitialiser.hpp"
 
-AppWithGlContext::AppWithGlContext(){
-    if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
+bool AppWithGlContext::OnInit(){
+  if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
     wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
     exit(1);
   }
+  return OnMyInit();
 }
 
 wxGLAttributes AppWithGlContext::GetGLAttrs() const {

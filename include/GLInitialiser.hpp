@@ -10,8 +10,10 @@ class AppWithGlContext : public wxApp {
   wxGLContextAttrs RealContextAttrs;
 
 public:
-  AppWithGlContext();
-  
+  bool OnInit() override;
+
+  virtual bool OnMyInit() {};
+
   virtual wxGLAttributes GetGLAttrs() const;
 
   virtual wxGLContextAttrs GetGLContextAttrs() const;
@@ -28,13 +30,12 @@ public:
 
   void RegisterGLCanvas(wxGLCanvas *Canvas);
   void UnRegisterGLCanvas(wxGLCanvas *Canvas);
-
 };
 
 class wxGLCanvasWithAppContext : public wxGLCanvas {
 public:
   AppWithGlContext *App;
-  std::optional<std::function<void(wxSizeEvent&)>> OnSize; 
+  std::optional<std::function<void(wxSizeEvent &)>> OnSize;
 
 public:
   wxGLCanvasWithAppContext(AppWithGlContext *App, wxWindow *parent,
@@ -48,7 +49,7 @@ public:
 
   bool BindContext();
 
-  void SetOnSize(std::function<void(wxSizeEvent&)> Func);
+  void SetOnSize(std::function<void(wxSizeEvent &)> Func);
 };
 
 // class GLInitiliser : public wxGLCanvas {
