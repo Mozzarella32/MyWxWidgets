@@ -28,7 +28,7 @@ bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
     return false;
 
   Canvas->SetCurrent(Canvas);
-  
+
   if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
     wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
     exit(1);
@@ -39,8 +39,8 @@ bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
     exit(1);
   }
 
+  isInitilized = true;
   OnGLInit();
-  
   return true;
 }
 
@@ -55,8 +55,7 @@ bool AppWithGlContext::BindGLContext() {
   return true;
 }
 
-
-const std::optional<wxGLContext> &AppWithGlContext::GetContext() const{
+const std::optional<wxGLContext> &AppWithGlContext::GetContext() const {
   return Context;
 }
 
@@ -81,12 +80,12 @@ wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
 
   App->RegisterGLCanvas(this);
 
-  Bind(wxEVT_SIZE, [this](wxSizeEvent& evt){
-       this->App->Initilized(this);
-         if(OnSize){
-           OnSize.value()(evt);
-         }
-       });
+  Bind(wxEVT_SIZE, [this](wxSizeEvent &evt) {
+    this->App->Initilized(this);
+    if (OnSize) {
+      OnSize.value()(evt);
+    }
+  });
 }
 wxGLCanvasWithAppContext::~wxGLCanvasWithAppContext() {
   App->UnRegisterGLCanvas(this);
@@ -102,7 +101,7 @@ bool wxGLCanvasWithAppContext::BindContext() {
   return true;
 }
 
-
-void wxGLCanvasWithAppContext::SetOnSize(std::function<void(wxSizeEvent&)> Func){
-    OnSize = Func;
-  }
+void wxGLCanvasWithAppContext::SetOnSize(
+    std::function<void(wxSizeEvent &)> Func) {
+  OnSize = Func;
+}
