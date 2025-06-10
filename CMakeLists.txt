@@ -38,4 +38,4 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCH_HEADERS})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR})
 
 # MyOpenGl Linking
-target_link_libraries(${PROJECT_NAME} PUBLIC MyOpenGl)
+target_link_libraries(${PROJECT_NAME} PUBLIC MyOpenGl wx::gl)
