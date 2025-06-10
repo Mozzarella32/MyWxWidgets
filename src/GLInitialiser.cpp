@@ -1,6 +1,6 @@
 #include "GLInitialiser.hpp"
 
-bool AppWithGlContext::OnInit(){
+bool AppWithGlContext::OnInit() {
   if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
     wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
     exit(1);
@@ -77,6 +77,7 @@ void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
     Canvas->SetCurrent(Context.value());
   }
   Canvases.insert(Canvas);
+  Canvas->CallAfter([Canvas]() { Canvas->SetSize(wxSize(1, 1)); });
   Canvas->Show();
 }
 
@@ -89,12 +90,13 @@ wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
     const wxSize &size, long style, const wxString &name,
     const wxPalette &palette)
     : wxGLCanvas(parent, App->GetGLAttrs(), id, pos, size, style, name,
-                 palette), App(App) {
+                 palette),
+      App(App) {
 
   App->RegisterGLCanvas(this);
 
   Bind(wxEVT_SIZE, [this](wxSizeEvent &evt) {
-    if(!this->App->Initilized(this)){
+    if (!this->App->Initilized(this)) {
       return;
     }
     if (OnSize) {
