@@ -73,6 +73,13 @@ wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
                  palette) {
 
   App->RegisterGLCanvas(this);
+
+  Bind(wxEVT_SIZE, [this](wxSizeEvent& evt){
+       this->App->Initilized(this);
+         if(OnSize){
+           OnSize.value()(evt);
+         }
+       });
 }
 wxGLCanvasWithAppContext::~wxGLCanvasWithAppContext() {
   App->UnRegisterGLCanvas(this);
@@ -87,3 +94,8 @@ bool wxGLCanvasWithAppContext::BindContext() {
   SetCurrent(App->GetContext().value());
   return true;
 }
+
+
+void wxGLCanvasWithAppContext::SetOnSize(std::function<void(wxSizeEvent&)> Func){
+    OnSize = Func;
+  }

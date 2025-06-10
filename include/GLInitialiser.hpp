@@ -33,6 +33,7 @@ public:
 class wxGLCanvasWithAppContext : public wxGLCanvas {
 public:
   AppWithGlContext *App;
+  std::optional<std::function<void(wxSizeEvent&)>> OnSize; 
 
 public:
   wxGLCanvasWithAppContext(AppWithGlContext *App, wxWindow *parent,
@@ -45,6 +46,8 @@ public:
   virtual ~wxGLCanvasWithAppContext();
 
   bool BindContext();
+
+  void SetOnSize(std::function<void(wxSizeEvent&)> Func);
 };
 
 // class GLInitiliser : public wxGLCanvas {
