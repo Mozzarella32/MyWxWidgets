@@ -36,7 +36,7 @@ bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
     return false;
   }
 
-  Canvas->SetCurrent(Canvas);
+  Canvas->SetCurrent(Context.value());
 
   if (!gladLoadGL()) {
     wxMessageBox("Failed to initialize GLAD!", "Error", wxICON_ERROR);
@@ -73,7 +73,7 @@ void AppWithGlContext::RegisterGLCanvas(wxGLCanvas *Canvas) {
       exit(1);
     }
 
-    Canvas->SetCurrent(Context);
+    Canvas->SetCurrent(Context.value());
   }
   Canvases.insert(Canvas);
   Canvas->Show();
