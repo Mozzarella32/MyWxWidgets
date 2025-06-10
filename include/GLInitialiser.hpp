@@ -10,9 +10,9 @@ class AppWithGlContext : public wxApp {
   wxGLContextAttrs RealContextAttrs;
 
 public:
-  bool OnInit() override;
+  bool OnInit() override final;
 
-  virtual bool OnMyInit() {};
+  virtual bool OnMyInit() { return true; };
 
   virtual wxGLAttributes GetGLAttrs() const;
 
