@@ -10,8 +10,14 @@ class FrameWithGlContext : public wxFrame {
   wxGLContextAttrs RealContextAttrs;
 
 public:
-  FrameWithGlContext();
-
+  FrameWithGlContext(wxWindow *parent,
+               wxWindowID id,
+               const wxString& title,
+               const wxPoint& pos = wxDefaultPosition,
+               const wxSize& size = wxDefaultSize,
+               long style = wxDEFAULT_FRAME_STYLE,
+               const wxString& name = wxASCII_STR(wxFrameNameStr));
+    
   virtual wxGLAttributes GetGLAttrs() const;
 
   virtual wxGLContextAttrs GetGLContextAttrs() const;
