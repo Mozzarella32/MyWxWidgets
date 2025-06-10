@@ -81,7 +81,7 @@ wxGLCanvasWithAppContext::wxGLCanvasWithAppContext(
     const wxSize &size, long style, const wxString &name,
     const wxPalette &palette)
     : wxGLCanvas(parent, App->GetGLAttrs(), id, pos, size, style, name,
-                 palette) {
+                 palette), App(App) {
 
   App->RegisterGLCanvas(this);
 
