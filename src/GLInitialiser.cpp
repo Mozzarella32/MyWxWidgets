@@ -27,6 +27,8 @@ bool AppWithGlContext::Initilized(wxGLCanvas *Canvas) {
   if (!Canvas->IsShownOnScreen())
     return false;
 
+  Canvas->SetCurrent(Canvas);
+  
   if (!wxGLCanvas::IsDisplaySupported(GetGLAttrs())) {
     wxMessageBox("Default GlAttrebutes not suppoerted", "Error", wxICON_ERROR);
     exit(1);
