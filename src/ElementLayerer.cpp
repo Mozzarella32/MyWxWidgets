@@ -102,7 +102,7 @@ wxCollapsiblePane* ElementLayerer::BeginCollapsible(const MarkupString& string, 
 
 		});
 
-	collab->Bind(wxEVT_COLLAPSIBLEPANE_CHANGED, [this, collab](wxCollapsiblePaneEvent& evt) {
+	collab->Bind(wxEVT_COLLAPSIBLEPANE_CHANGED, [collab](wxCollapsiblePaneEvent& evt) {
 		PROFILE_SCOPE("Collapsible Changed");
 		evt.Skip();
 		collab->Layout();
