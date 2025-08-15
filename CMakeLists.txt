@@ -28,6 +28,12 @@ source_group("Header Files" FILES ${MY_HEADERS})
 list(REMOVE_ITEM MY_SOURCE ${PCH_HEADERS})
 list(REMOVE_ITEM MY_HEADERS ${PCH_HEADERS})
 
+if (MSVC)
+    add_compile_options(/W4)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic -Wno-missing-field-initializers -Wno-missing-designated-field-initializers)
+endif()
+
 # Statische Bibliothek erstellen
 add_library(${PROJECT_NAME} STATIC ${MY_SOURCE})
 

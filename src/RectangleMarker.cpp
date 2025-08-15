@@ -18,8 +18,8 @@ void RectangelMarker::OnSize(wxSizeEvent& evt) {
 	wxAffineMatrix2D ToFull{};
 	ToFull.Scale(GetSize().x, GetSize().y);
 
-	auto Top = ToFull.TransformPoint({ 0,0 });
-	auto Bottom = ToFull.TransformPoint({ 1,0.2 });
+	// auto Top = ToFull.TransformPoint({ 0,0 });
+	// auto Bottom = ToFull.TransformPoint({ 1,0.2 });
 
 	wxPoint Stripes{ GetSize().x / BorderSize,GetSize().y / BorderSize };
 	wxPoint Scales = Stripes * 2;

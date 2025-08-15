@@ -74,7 +74,7 @@ void ChartControl::UpdateBackround() {
 	gc->SetFont(titleFont, wxSystemSettings::GetAppearance().IsDark() ? *wxWHITE : *wxBLACK);
 	dc.SetFont(titleFont);
 
-	auto titleFontPointSize = titleFont.GetFractionalPointSize();
+	// auto titleFontPointSize = titleFont.GetFractionalPointSize();
 
 	double tw, th;
 	gc->GetTextExtent(Title, &tw, &th);
@@ -165,12 +165,12 @@ void ChartControl::UpdatePointArray() {
 	pointArray.clear();
 
 	if (style == ChartStyle::Area) {
-		auto Start = valueToChartArea.TransformPoint({ 0,rangeLow });
+		const auto& Start = valueToChartArea.TransformPoint({ 0,rangeLow });
 		pointArray.push_back(wxPoint(Start.m_x, Start.m_y));
 	}
 
-	for (int i = 0; i < Values.size(); i++) {
-		auto Point = valueToChartArea.TransformPoint({ static_cast<double>(i), Values[i] });
+	for (size_t i = 0; i < Values.size(); i++) {
+		const auto& Point = valueToChartArea.TransformPoint({ static_cast<double>(i), Values[i] });
 		pointArray.push_back(wxPoint(Point.m_x, Point.m_y));
 	}
 
@@ -198,7 +198,7 @@ void ChartControl::UpdateHighLow() {
 	}
 }
 
-void ChartControl::OnPaint(wxPaintEvent& evt) {
+void ChartControl::OnPaint([[maybe_unused]]wxPaintEvent& evt) {
 	PROFILE_FUNKTION;
 
 	if (MySize != GetSize()) {

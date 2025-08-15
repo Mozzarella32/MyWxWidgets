@@ -1,7 +1,7 @@
 #include "ValidatorWithLabel.hpp"
 
 ValidatorWithLabel::ValidatorWithLabel(wxStaticText* msgLabel, wxString* val)
-    : value(val), validationMsgLabel(msgLabel)
+    : validationMsgLabel(msgLabel), value(val)
 {
     validationMsgLabel->SetDoubleBuffered(true);
     SetupEvents();
@@ -38,7 +38,7 @@ bool ValidatorWithLabel::TransferToWindow()
     return true;
 }
 
-bool ValidatorWithLabel::Validate(wxWindow* parent)
+bool ValidatorWithLabel::Validate([[maybe_unused]]wxWindow* parent)
 {
     const auto& [valid, _] = CheckValidity(GetTextEntry()->GetValue());
     return valid;
