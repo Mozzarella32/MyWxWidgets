@@ -29,9 +29,9 @@ list(REMOVE_ITEM MY_SOURCE ${PCH_HEADERS})
 list(REMOVE_ITEM MY_HEADERS ${PCH_HEADERS})
 
 if (MSVC)
-    add_compile_options(/W4)
+    add_compile_options(/W4 /WX)
 else()
-    add_compile_options(-Wall -Wextra -Wpedantic -Wno-missing-field-initializers -Wno-missing-designated-field-initializers)
+    add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wno-missing-field-initializers)
 endif()
 
 # Statische Bibliothek erstellen
