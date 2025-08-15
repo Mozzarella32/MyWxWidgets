@@ -89,7 +89,7 @@ wxCollapsiblePane* ElementLayerer::BeginCollapsible(const MarkupString& string, 
 	PostAddContent();
 	PROFILE_SCOPE_ID_END(4);
 
-	collab->Bind(wxEVT_FIT_REQUEST, [collab, paneSizer](wxCommandEvent& evt) {
+	collab->Bind(wxEVT_FIT_REQUEST, [collab](wxCommandEvent& evt) {
 		PROFILE_SCOPE("FitRequest On Collap");
 		evt.Skip();
 		bool now = collab->IsCollapsed();
