@@ -10,9 +10,6 @@ ChartControl::ChartControl(wxWindow* parent, wxWindowID id) : wxWindow(parent, i
 
 	wxPen LinePen(*wxBLUE, 3, wxPENSTYLE_SOLID);
 	LinePen.SetQuality(wxPenQuality::wxPEN_QUALITY_HIGH);
-	//LinePen.SetCap(wxCAP_ROUND);
-	//LinePen.SetJoin(wxJOIN_ROUND);
-	//LinePen.SetAntialiasMode(wxANTIALIAS_DEFAULT);  // Hier können Sie andere Antialiasing-Modi ausprobieren
 	this->Pen = LinePen;
 	UpdateHighLow();
 }
