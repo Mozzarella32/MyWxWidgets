@@ -11,7 +11,7 @@ public:
 	explicit MarkupString(const wxString& str) : wxString(str) {}
 
 	MarkupString() {};
-	MarkupString(wxWindow* window);;
+	MarkupString(wxWindow* window);
 
 	MarkupString& EndInharitance();
 
