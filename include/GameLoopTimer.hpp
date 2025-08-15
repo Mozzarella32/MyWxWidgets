@@ -21,8 +21,6 @@ private:
 	std::chrono::high_resolution_clock::time_point NextTime;
 	std::chrono::high_resolution_clock::time_point LastTime;
 
-	double NextSleep = 0;
-
 	struct Info {
 		double FPS;
 		std::chrono::high_resolution_clock::duration Sleep;
