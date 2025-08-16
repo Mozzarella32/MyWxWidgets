@@ -12,6 +12,8 @@
 
 #ifdef _WIN32
 
+#undef APIENTRY
+
 #ifndef _SILENCE_CXX23_DENORM_DEPRECATION_WARNING
 #define _SILENCE_CXX23_DENORM_DEPRECATION_WARNING
 #endif
@@ -23,6 +25,8 @@
 #endif
 
 #define _CRT_SECURE_NO_WARNINGS
+
+#include <winsock2.h>
 #include <Windows.h>
 #include <GL/gl.h>
 #endif
