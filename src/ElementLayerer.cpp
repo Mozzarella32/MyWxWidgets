@@ -10,8 +10,8 @@ ElementLayerer::ElementLayerer(wxWindow* RootParent, wxSizer* RootSizer, StyleFu
 	ContentLayerSizer.push(RootSizer);
 }
 
-void ElementLayerer::SetSFunk(StyleFunktion SFunk){
-	this->SFunk = SFunk;
+void ElementLayerer::SetSFunk(StyleFunktion newSFunk){
+	SFunk = newSFunk;
 }
 
 wxSizer* ElementLayerer::GetRootSizer() const {

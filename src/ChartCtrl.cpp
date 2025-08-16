@@ -14,42 +14,42 @@ ChartControl::ChartControl(wxWindow* parent, wxWindowID id) : wxWindow(parent, i
 	UpdateHighLow();
 }
 
-void ChartControl::SetValues(const std::vector<double>& Values) {
+void ChartControl::SetValues(const std::vector<double>& values) {
 	PROFILE_FUNKTION;
-	if (Values == this->Values)return;
+	if (values == Values)return;
 
-	this->Values = Values;
-	NumberValues = Values.size();
+	Values = values;
+	NumberValues = values.size();
 
 	UpdateHighLow();
 }
 
-void ChartControl::SetTitle(const std::string& Title) {
+void ChartControl::SetTitle(const std::string& title) {
 	PROFILE_FUNKTION;
-	this->Title = Title;
+	Title = title;
 	HasChanged = true;
 }
 
-void ChartControl::SetUnit(const std::string& Unit, const std::string& UnitFormat) {
+void ChartControl::SetUnit(const std::string& unit, const std::string& unitFormat) {
 	PROFILE_FUNKTION;
-	this->Unit = Unit;
-	this->UnitFormat = UnitFormat;
+	Unit = unit;
+	UnitFormat = unitFormat;
 	HasChanged = true;
 }
 
-void ChartControl::SetPen(const wxPen& Pen) {
+void ChartControl::SetPen(const wxPen& newPen) {
 	PROFILE_FUNKTION;
-	this->Pen = Pen;
+	Pen = newPen;
 }
 
-void ChartControl::SetBrush(const wxBrush& Brush) {
+void ChartControl::SetBrush(const wxBrush& newBrush) {
 	PROFILE_FUNKTION;
-	this->Brush = Brush;
+	Brush = newBrush;
 }
 
-void ChartControl::SetStyle(const ChartStyle& style) {
+void ChartControl::SetStyle(const ChartStyle& newStyle) {
 	PROFILE_FUNKTION;
-	this->style = style;
+	style = newStyle;
 	HasChanged = true;
 }
 
@@ -128,7 +128,6 @@ void ChartControl::UpdateBackround() {
 		text += Unit;
 		text = wxControl::Ellipsize(text, dc, wxELLIPSIZE_MIDDLE, chartArea.GetLeft() * 2 - UnitRightMargin);
 
-		double tw, th;
 		gc->GetTextExtent(text, &tw, &th);
 		gc->DrawText(text, chartArea.GetLeft() - UnitRightMargin - tw, lineStartPoint.m_y - th / 2.0);
 	}
