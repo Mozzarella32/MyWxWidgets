@@ -86,8 +86,6 @@ jobs:
         
     - name: Set up sccache
       uses: mozilla-actions/sccache-action@v0.0.9
-      env:
-        SCCACHE_GHA_ENABLED: "true"
               
     # - name: Cache build
     #   uses: actions/cache@v4
@@ -109,6 +107,8 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libglu1-mesa-dev build-essential
 
     - name: Configure CMake
+      env:
+        SCCACHE_GHA_ENABLED: "true"
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
@@ -120,6 +120,8 @@ jobs:
 
          
     - name: Build
+      env:
+        SCCACHE_GHA_ENABLED: "true"
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
       
