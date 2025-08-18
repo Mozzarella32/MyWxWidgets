@@ -84,16 +84,18 @@ jobs:
     #       }
     #     }
         
-    # - name: Set up sccache
-      # uses: mozilla-actions/sccache-action@v0.0.9
-
-    - name: Cache build
-      uses: actions/cache@v4
-      with:
-        path: build
-        key: cmake-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}-${{ hashFiles('**/CMakeLists.txt') }}
-        restore-keys: |
-          cmake-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
+    - name: Set up sccache
+      uses: mozilla-actions/sccache-action@v0.0.9
+      env:
+        SCCACHE_GHA_ENABLED: "true"
+              
+    # - name: Cache build
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: build
+    #     key: cmake-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}-${{ hashFiles('**/CMakeLists.txt') }}
+    #     restore-keys: |
+    #       cmake-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -101,37 +103,21 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-        # if [[ "${{ runner.os }}" == "Windows" ]]; then
-        #     echo "sccache-dir=$LOCALAPPDATA\Mozilla\sccache\cache" >> "$GITHUB_OUTPUT"
-        # else
-        #     echo "sccache-dir=$HOME/.cache/sccache" >> "$GITHUB_OUTPUT"
-        # fi
 
     - name: Install GTK3(Ubuntu)
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libglu1-mesa-dev build-essential
-
-    # - name: Restore sccache
-    #   uses: actions/cache/restore@v4
-    #   with:
-    #     path: ${{ steps.strings.outputs.sccache-dir }}
-    #     key: ccache-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
-    # - name: Restore build
-    #   uses: actions/cache/restore@v4
-    #   with:
-    #     path: build
-    #     key: build-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ matrix.build_type }}
 
     - name: Configure CMake
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+        -DCMAKE_CXX_COMPILER_LAUNCHER="sccache"
+        -DCMAKE_C_COMPILER_LAUNCHER="sccache"
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
 
-      # -DCMAKE_CXX_COMPILER_LAUNCHER="sccache"
-      # -DCMAKE_C_COMPILER_LAUNCHER="sccache"
          
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
