@@ -6,3 +6,6 @@
 	path = submodules/MyOpenGl
 	url = https://github.com/Mozzarella32/MyOpenGl.git
 	branch = main
+[submodule "submodules/wxWidgets"]
+	path = submodules/wxWidgets
+	url = https://github.com/wxWidgets/wxWidgets.git
