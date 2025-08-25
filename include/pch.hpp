@@ -62,3 +62,4 @@
 #include <thread>
 
 #include <Utilities.hpp>
+#include <Texture.hpp>
