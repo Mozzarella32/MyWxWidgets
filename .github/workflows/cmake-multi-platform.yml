@@ -8,31 +8,51 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
 
+    runs-on: ${{ matrix.runner }}
+    
     strategy:
       fail-fast: false
-
       matrix:
         os: [ubuntu-latest, windows-latest, archlinux]
         build_type: [Release, Debug]
         c_compiler: [gcc, clang, cl]
         include:
+          # Windows
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
+            runner: windows-latest
+          # Ubuntu
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
+            runner: ubuntu-latest
           - os: ubuntu-latest
             c_compiler: clang
             cpp_compiler: clang++
+            runner: ubuntu-latest
+          # Archlinux self-hosted
           - os: archlinux
+            build_type: Debug
             c_compiler: gcc
             cpp_compiler: g++
+            runner: archlinux-debug-gcc
           - os: archlinux
+            build_type: Release
+            c_compiler: gcc
+            cpp_compiler: g++
+            runner: archlinux-release-gcc
+          - os: archlinux
+            build_type: Debug
             c_compiler: clang
             cpp_compiler: clang++
+            runner: archlinux-debug-clang
+          - os: archlinux
+            build_type: Release
+            c_compiler: clang
+            cpp_compiler: clang++
+            runner: archlinux-release-clang
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -64,14 +84,12 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libglu1-mesa-dev build-essential
 
-    - name: Arch restore Build
+    - name: Arch create symlink
       if: matrix.os == 'archlinux'
       shell: bash
       run: |
-        mkdir -p ${{ steps.strings.outputs.build-output-dir }}
-        cp --preserve=timestamps -r ${{ steps.strings.outputs.arch-cache-dir }}/* ${{ steps.strings.outputs.build-output-dir }} || true
-        rm -rf ${{ steps.strings.outputs.build-output-dir }}/CMakeFiles/Digitaler.dir/cmake_pch.hxx.pch
-      #Ugly clang workaround ^
+        mkdir -p ${{ steps.strings.outputs.arch-cache-dir }}
+        ln -s ${{ steps.strings.outputs.arch-cache-dir }} ${{ steps.strings.outputs.build-output-dir }} 
 
     - name: Configure CMake with sccache
       if: matrix.os != 'archlinux'
@@ -105,13 +123,11 @@ jobs:
       if: matrix.os == 'archlinux'
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-    - name: Arch save Build
+    - name: Arch remove symlink
       if: matrix.os == 'archlinux'
       shell: bash
       run: |
-        rm -rf ${{ steps.strings.outputs.arch-cache-dir }}
-        mkdir -p ${{ steps.strings.outputs.arch-cache-dir }}
-        cp --preserve=timestamps -r ${{ steps.strings.outputs.build-output-dir }}/* ${{ steps.strings.outputs.arch-cache-dir }} 
+        rm ${{ steps.strings.outputs.build-output-dir }}
 
     # - name: Test
     #   working-directory: ${{ steps.strings.outputs.build-output-dir }}
