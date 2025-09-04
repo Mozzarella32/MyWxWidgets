@@ -19,15 +19,19 @@ set(LIB_DIR "${PROJECT_SOURCE_DIR}/lib")
 
 set(PCH_HEADERS "${INCLUDE_DIR}/pch.hpp")
 
-file(GLOB_RECURSE MY_SOURCE CONFIGURE_DEPENDS "${SRC_DIR}/*")
-
-file(GLOB_RECURSE MY_HEADERS CONFIGURE_DEPENDS "${INCLUDE_DIR}/*")
-
-source_group("Source Files" FILES ${MY_SOURCE})
-source_group("Header Files" FILES ${MY_HEADERS})
-
-list(REMOVE_ITEM MY_SOURCE ${PCH_HEADERS})
-list(REMOVE_ITEM MY_HEADERS ${PCH_HEADERS})
+set(MY_SOURCE
+    src/ChartCtrl.cpp
+    src/GameLoopTimer.cpp
+    src/pch.cpp
+    src/ValidatorWithLabel.cpp
+    src/ElementLayerer.cpp
+    src/GLInitialiser.cpp
+    src/RectangleMarker.cpp
+    src/WxTextureUtil.cpp
+    src/FunktionEvent.cpp
+    src/MarkupString.cpp
+    src/Utility.cpp
+)
 
 if (MSVC)
     add_compile_options(/W4 /WX)
