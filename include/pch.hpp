@@ -1,13 +1,5 @@
 #pragma once
 
-// #define c
-// #include <glad/gl.h>
-// #include <GL/glew.h>
-
-// #ifndef GLEW_STATIC
-// #define GLEW_STATIC
-// #endif
-
 #include <glad/glad.h>
 
 #ifdef _WIN32
@@ -37,19 +29,18 @@
 #include <GL/glu.h>
 #endif
 
-// #include <GL/glew.h>
-// #ifdef _WIN32
-    // #include <GL/GL.h>
-// #else
-    // #include <GL/gl.h>
-// #endif
-
-#include <wx/wx.h>
 #include <wx/settings.h>
 #include <wx/graphics.h>
 #include <wx/dcbuffer.h>
 #include <wx/collpane.h>
-#include <wx/glcanvas.h>
+#include <wx/msgdlg.h>
+#include <wx/app.h>
+#include <wx/textentry.h>
+#include <wx/statbox.h>
+#include <wx/stattext.h>
+#include <wx/frame.h>
+#include <wx/validate.h>
+#include <wx/sizer.h>
 
 #include <string>
 #include <vector>
